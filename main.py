@@ -9,7 +9,7 @@ st.title('Driver Sign-offs')
 st.info('View driver notes and pictures, for the orders placed on the natural retreats partner site.')
 st.success('Data updated each day at: **6:30 - 7:00 AM**, **12:00 - 12:30 PM**, and **4:30 - 5:00 PM** CST.')
 
-l, r = st.columns(2)
+l, r = st.columns([1,2])
 
 df = pd.read_csv(st.secrets['driveURL'] + st.secrets['fileID'], index_col=False)
 df = df.rename(columns={'ID': 'Order'})
