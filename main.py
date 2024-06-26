@@ -32,7 +32,7 @@ if df.shape[0] > 0:
 
 
     st.subheader(df.Name.iloc[0])
-    st.caption(df.Order.iloc[0])
+    st.caption(f'Order: {df.Order.iloc[0]}')
     st.caption(df.Location.iloc[0])
     st.write(df['Order Start'].iloc[0])
     st.write(df['Order End'].iloc[0])
