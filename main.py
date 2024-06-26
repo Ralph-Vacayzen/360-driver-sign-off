@@ -17,6 +17,8 @@ search_option = l.selectbox('Search on:', ['Order','Name','Location'])
 option = r.selectbox(f'**Vacayzen** {search_option}', options=df[search_option].unique())
 df = df[df[search_option] == option]
 
+st.divider()
+
 if df.shape[0] > 0:
 
     df['Sign-off'] = pd.to_datetime(df['Sign-off'])
