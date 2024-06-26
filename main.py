@@ -11,8 +11,10 @@ st.success('Data updated each day at: **6:30 - 7:00 AM**, **12:00 - 12:30 PM**, 
 
 
 df = pd.read_csv(st.secrets['driveURL'] + st.secrets['fileID'], index_col=False)
-order = st.selectbox('**Vacayzen** Order Number', options=df.ID.unique())
-df = df[df.ID == order]
+df = df.rename(columns={'ID': 'Order'})
+search_option = st.selectbox('Search on:', ['Order','Name','Location'])
+option = st.selectbox(f'**Vacayzen** {search_option}', options=df[search_option].unique())
+df = df[df[search_option] == option]
 
 if df.shape[0] > 0:
 
