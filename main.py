@@ -9,11 +9,12 @@ st.title('Driver Sign-offs')
 st.info('View driver notes and pictures, for the orders placed on the natural retreats partner site.')
 st.success('Data updated each day at: **6:30 - 7:00 AM**, **12:00 - 12:30 PM**, and **4:30 - 5:00 PM** CST.')
 
+l, r = st.columns(2)
 
 df = pd.read_csv(st.secrets['driveURL'] + st.secrets['fileID'], index_col=False)
 df = df.rename(columns={'ID': 'Order'})
-search_option = st.selectbox('Search on:', ['Order','Name','Location'])
-option = st.selectbox(f'**Vacayzen** {search_option}', options=df[search_option].unique())
+search_option = l.selectbox('Search on:', ['Order','Name','Location'])
+option = r.selectbox(f'**Vacayzen** {search_option}', options=df[search_option].unique())
 df = df[df[search_option] == option]
 
 if df.shape[0] > 0:
