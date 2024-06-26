@@ -74,4 +74,4 @@ if df.shape[0] > 0:
 
 else:
 
-    st.warning(f'Order **{order}** is not a partner-site order, or its data has not yet been provided via data update.')
+    st.warning(f'Data for **{option}** is not available.')
