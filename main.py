@@ -10,9 +10,8 @@ st.info('View driver notes and pictures, for the orders placed on the natural re
 st.success('Data updated each day at: **6:30 - 7:00 AM**, **12:00 - 12:30 PM**, and **4:30 - 5:00 PM** CST.')
 
 
-order = st.number_input('**Vacayzen** Order Number', step=1)
-
 df = pd.read_csv(st.secrets['driveURL'] + st.secrets['fileID'], index_col=False)
+order = st.selectbox('**Vacayzen** Order Number', options=df.ID.unique())
 df = df[df.ID == order]
 
 if df.shape[0] > 0:
