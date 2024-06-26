@@ -7,7 +7,7 @@ st.set_page_config(page_title='Vacayzen | Driver Sign-offs', page_icon='📸', l
 st.caption('VACAYZEN')
 st.title('Driver Sign-offs')
 st.info('View driver notes and pictures, for the orders placed on the natural retreats partner site.')
-st.success('Data updated each day at **7:00 AM** & **5:00 PM** CST.')
+st.success('Data updated each day at **6:30 - 7:00 AM** & **4:30 - 5:00 PM** CST.')
 
 
 order = st.number_input('**Vacayzen** Order Number', step=1)
