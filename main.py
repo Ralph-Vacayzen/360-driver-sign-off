@@ -1,0 +1,72 @@
+import streamlit as st
+import pandas as pd
+
+st.set_page_config(page_title='Vacayzen | Driver Sign-offs', page_icon='📸', layout="centered", initial_sidebar_state="auto", menu_items=None)
+
+
+st.caption('VACAYZEN')
+st.title('Driver Sign-offs')
+st.info('View driver notes and pictures, for the orders placed on the natural retreats partner site.')
+st.success('Data updated each day at **7:00 AM** & **5:00 PM** CST.')
+
+
+order = st.number_input('**Vacayzen** Order Number', step=1)
+
+df = pd.read_csv(st.secrets['driveURL'] + st.secrets['fileID'], index_col=False)
+df = df[df.ID == order]
+
+if df.shape[0] > 0:
+
+    df['Sign-off'] = pd.to_datetime(df['Sign-off'])
+    df['Order Start'] = pd.to_datetime(df['Order Start'])
+    df['Order End'] = pd.to_datetime(df['Order End'])
+
+    def remove_asterisks_from_driver_notes(row):
+        return row.Note.replace('*','')
+    
+    df.Note = df.apply(remove_asterisks_from_driver_notes, axis=1)
+
+
+    st.subheader(df.Name.iloc[0])
+    st.caption(df.Location.iloc[0])
+    st.write(df['Order Start'].iloc[0])
+    st.write(df['Order End'].iloc[0])
+    st.divider()
+
+    position = 0
+    l, m, r = st.columns(3)
+
+    def show_picture_details(row):
+        global position
+        height = 105
+        match position:
+            case 0:
+                l.write(f'**{row.Activity}**')
+                l.write(row['Sign-off'])
+                if not pd.isna(row['Note']):
+                    with l.container(height=height, border=False):
+                        st.write(row['Note'])
+                l.image(st.secrets['imageURL']+row['Image'])
+                position = 1
+            case 1:
+                m.write(f'**{row.Activity}**')
+                m.write(row['Sign-off'])
+                if not pd.isna(row['Note']):
+                    with m.container(height=height, border=False):
+                        st.write(row['Note'])
+                m.image(st.secrets['imageURL']+row['Image'])
+                position = 2
+            case 2:
+                r.write(f'**{row.Activity}**')
+                r.write(row['Sign-off'])
+                if not pd.isna(row['Note']):
+                    with r.container(height=height, border=False):
+                        st.write(row['Note'])
+                r.image(st.secrets['imageURL']+row['Image'])
+                position = 0
+    
+    df.apply(show_picture_details, axis=1)
+
+else:
+
+    st.warning(f'Order **{order}** is not a partner-site order, or its data has not yet been provided via data update.')
